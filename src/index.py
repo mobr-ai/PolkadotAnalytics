@@ -61,7 +61,7 @@ def kbm_sparql_query(sparql_spec:str, select_term:str):
     eclass = KBM.run_sparql(sparql_spec, select_term)
     return reply_list(eclass, ok_status_code)
 
-@app.route('/kbm/knowledge_injection/<turtle_file>', methods=['GET'])
+@app.route('/kbm/knowledge_injection/<turtle_file>', methods=['PUT'])
 def kbm_knowledge_injection(turtle_file:str):
-    eclass = KBM.inject_turtle_file(turtle_file)
-    return reply_list(eclass, ok_status_code)
+    KBM.inject_turtle_file(turtle_file)
+    return make_response(jsonify("knowledge injected", ok_status_code))
