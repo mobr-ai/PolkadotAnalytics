@@ -1,0 +1,6 @@
+flask
+flask-compress
+pyfuseki
+requests
+urllib3
+rdflib

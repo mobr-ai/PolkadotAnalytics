@@ -1,0 +1,118 @@
+swagger: "2.0"
+info:
+  description: "This is the api documentation for pap."
+  version: "0.0.1"
+  title: "PAP -- powered by mobr"
+  termsOfService: "https://mobr.ai"
+  contact:
+    email: "apiteam@moondash.app"
+  license:
+    name: "Apache license"
+host: "127.0.0.1:80"
+basePath: "/"
+tags:
+- name: "ponto"
+  description: "ponto management"
+- name: "kb"
+  description: "Knowledge Base management"
+- name: "queries"
+  description: "query engine endpoints"
+schemes:
+- "http"
+paths:
+  /ponto/getConcepts:
+    get:
+      tags:
+      - "ponto"
+      summary: "get all concepts"
+      description: ""
+      operationId: "ponto_concepts"
+      responses:
+        "200":
+          description: "successful operation"
+        "304":
+          description: "Exception was raised"
+        "400":
+          description: "Invalid parameters supplied"
+
+  /ponto/getProperties:
+    get:
+      tags:
+      - "ponto"
+      summary: "get all properties"
+      description: ""
+      operationId: "ponto_properties"
+      responses:
+        "200":
+          description: "successful operation"
+        "304":
+          description: "Exception was raised"
+        "400":
+          description: "Invalid parameters supplied"
+
+  /ponto/getParent/{entity_name}:
+    get:
+      tags:
+      - "ponto"
+      summary: "get the parent of a specific entity"
+      description: ""
+      operationId: "ponto_get_parent"
+      parameters:
+      - name: "entity_name"
+        in: "path"
+        description: "Entity name. E.g.: Parachain"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "304":
+          description: "Exception was raised"
+        "400":
+          description: "Invalid parameters supplied"
+
+  /ponto/getChildren/{entity_name}:
+    get:
+      tags:
+      - "ponto"
+      summary: "get the children of a specific entity"
+      description: ""
+      operationId: "ponto_get_children"
+      parameters:
+      - name: "entity_name"
+        in: "path"
+        description: "Entity name. E.g.: DistributedLedger"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "304":
+          description: "Exception was raised"
+        "400":
+          description: "Invalid parameters supplied"
+
+  /ponto/defineEntity/{entity_name}:
+    get:
+      tags:
+      - "ponto"
+      summary: "get the definition of a specific entity"
+      description: ""
+      operationId: "ponto_define_entity"
+      parameters:
+      - name: "entity_name"
+        in: "path"
+        description: "Entity name. E.g.: DistributedLedger"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "304":
+          description: "Exception was raised"
+        "400":
+          description: "Invalid parameters supplied"
+
+externalDocs:
+  description: "Find out more about PAP"
+  url: "http://mobr.ai"

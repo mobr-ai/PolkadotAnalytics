@@ -1,0 +1,10 @@
+env
+bin
+deps
+include
+lib
+lib64
+pyenv.cfg
+share
+__pycache__
+.vscode

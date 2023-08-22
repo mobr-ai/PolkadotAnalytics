@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+        fuseki:
+                environment:
+                        - FUSEKI_VERSION=4.9.0
+
+                image: mobr/fuseki
+                expose:
+                        - 3030
+                ports:
+                        - 3030:3030
+                command: ["/jena-fuseki/fuseki-server", "--update", "--tdb2", "--verbose", "--debug"]
+                container_name: fuseki
+
+        flask:
+                build: ./
+                image: 'mobr/pap'
+                tty: true
+                ports:
+                        - 80:80
+                depends_on:
+                        - fuseki
+                command: [ "./wait-for-it.sh", "-t", "20", "fuseki:3030", "--", "python", "app.py", "-pp", "/usr/src/pap/POnto.ttl" ]
+                container_name: pap
+
+# services:
+#         fuseki:
+#                 build: ./
+#                 image: mobr/pap
+#                 ports:
+#                         - 3030:3030
+#                 command: ["/jena-fuseki/fuseki-server", "--update", "--tdb2"]
+#                 container_name: fuseki
+
+#         flask:
+#                 image: 'mobr/pap'
+#                 ports:
+#                         - 80:80
+#                 depends_on:
+#                         - fuseki
+#                 command: [ "./wait-for-it.sh", "-t", "0", "fuseki:3030", "--", "python", "app.py", "-pp", "/usr/src/pap/POnto.ttl" ]
+#                 container_name: pap
