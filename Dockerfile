@@ -22,6 +22,6 @@ ADD . .
 RUN pip install -r requirements.txt && \
     wget https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl
 
-EXPOSE 80
+EXPOSE 5000
 
 WORKDIR /usr/src/pap/src

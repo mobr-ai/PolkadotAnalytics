@@ -68,7 +68,7 @@ python app.py -pp <url_to_ponto_flat_file>
 
 using your browser, you can access:
 - the jena dataset: http://127.0.0.1:3030
-- the platform: http://127.0.0.1:80
+- the platform: http://127.0.0.1:5000
 
 <br>
 
@@ -96,4 +96,4 @@ docker compose up
 
 using your browser, you can access:
 - the jena dataset: http://127.0.0.1:3030
-- the platform: http://127.0.0.1:80
+- the platform: http://127.0.0.1:5000

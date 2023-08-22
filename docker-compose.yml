@@ -18,7 +18,7 @@ services:
                 image: 'mobr/pap'
                 tty: true
                 ports:
-                        - 80:80
+                        - 5000:5000
                 depends_on:
                         - fuseki
                 command: [ "./wait-for-it.sh", "-t", "20", "fuseki:3030", "--", "python", "app.py", "-pp", "/usr/src/pap/POnto.ttl", "-fu",  "http://fuseki:3030"]
@@ -36,7 +36,7 @@ services:
 #         flask:
 #                 image: 'mobr/pap'
 #                 ports:
-#                         - 80:80
+#                         - 5000:5000
 #                 depends_on:
 #                         - fuseki
 #                 command: [ "./wait-for-it.sh", "-t", "0", "fuseki:3030", "--", "python", "app.py", "-pp", "/usr/src/pap/POnto.ttl" ]

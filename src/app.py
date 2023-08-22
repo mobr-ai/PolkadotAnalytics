@@ -25,4 +25,4 @@ if __name__ == "__main__":
     Ponto.fuseki_base_url = args.fbu
     fs = FusekiServer(args.fbu)
     fs.create_ponto_dataset(args.path_ponto)
-    app.run(host="0.0.0.0", port=80, debug=False, threaded=False)
+    app.run(host="0.0.0.0", port=5000, debug=False, threaded=False)
