@@ -3,9 +3,9 @@ import sys
 from argparse import ArgumentParser
 from flask_compress import Compress
 
-from pap.index import app
-from pap.fuseki.kbm import KBM
-from pap.fuseki.dataset import DatasetManager
+from index import app
+from fuseki.kbm import KBM
+from fuseki.dataset import DatasetManager
 
 if sys.version_info[0] < 3:
     raise Exception("Python 2.x is not supported. Please upgrade to 3.x")

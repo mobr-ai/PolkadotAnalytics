@@ -19,5 +19,3 @@ RUN pip install -r requirements.txt && \
     wget https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl
 
 EXPOSE 5000
-
-WORKDIR /usr/src/polkadot/pap

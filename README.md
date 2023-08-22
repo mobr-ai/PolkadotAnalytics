@@ -53,8 +53,7 @@ https://jena.apache.org/download/
 fuseki-server --update --tdb2
 
 # run http flask server
-cd pap
-python app.py -pp <url_to_ponto_flat_file>
+python pap/app.py -pp <url_to_ponto_flat_file>
 ```
 
 <br>
@@ -67,7 +66,7 @@ python app.py -pp <url_to_ponto_flat_file>
 cd jena-fuseki
 docker build -t mobr/fuseki . --no-cache
 
-# specify platform if you're using a mac with apple chip (M1 or M2)
+# for Mac users: specify platform if you're using a mac with apple chip (M1 or M2)
 cd jena-fuseki
 docker build -t mobr/fuseki . --platform linux/x86_64/v2 --no-cache
 
@@ -83,3 +82,13 @@ using your browser, you can access:
 - the fuseki server frontend: http://127.0.0.1:3030
 - the platform frontend: http://127.0.0.1:5000
 - the platform swagger UI: http://127.0.0.1:5000/swagger
+
+# How to test
+
+```bash
+# first make sure you have pytest
+pip install pytest
+
+# testing http endpoints
+python -m pytest pap/tests/test_app.py
+```

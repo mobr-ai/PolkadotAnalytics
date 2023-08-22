@@ -1,5 +1,6 @@
 import os, json
 from flask import Flask, render_template, jsonify, make_response, send_from_directory
+
 from fuseki.kbm import KBM
 
 ok_status_code = 200
