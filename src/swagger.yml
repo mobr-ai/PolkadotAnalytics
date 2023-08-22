@@ -11,22 +11,24 @@ info:
 host: "127.0.0.1:80"
 basePath: "/"
 tags:
-- name: "ponto"
-  description: "ponto management"
-- name: "kb"
+- name: "kbm"
   description: "Knowledge Base management"
+- name: "cnl"
+  description: "Available at the end of stage 3: CNL endpoints"
 - name: "queries"
-  description: "query engine endpoints"
+  description: "Available at the end of stage 4: Query engine endpoints"
+- name: "visualization"
+  description: "Available at the end of stage 5: Informative artifacts and dashboard endpoints"
 schemes:
 - "http"
 paths:
-  /ponto/getConcepts:
+  /kbm/getConcepts:
     get:
       tags:
-      - "ponto"
+      - "kbm"
       summary: "get all concepts"
       description: ""
-      operationId: "ponto_concepts"
+      operationId: "kbm_concepts"
       responses:
         "200":
           description: "successful operation"
@@ -35,13 +37,13 @@ paths:
         "400":
           description: "Invalid parameters supplied"
 
-  /ponto/getProperties:
+  /kbm/getProperties:
     get:
       tags:
-      - "ponto"
+      - "kbm"
       summary: "get all properties"
       description: ""
-      operationId: "ponto_properties"
+      operationId: "kbm_properties"
       responses:
         "200":
           description: "successful operation"
@@ -50,13 +52,13 @@ paths:
         "400":
           description: "Invalid parameters supplied"
 
-  /ponto/getParent/{entity_name}:
+  /kbm/getParent/{entity_name}:
     get:
       tags:
-      - "ponto"
+      - "kbm"
       summary: "get the parent of a specific entity"
       description: ""
-      operationId: "ponto_get_parent"
+      operationId: "kbm_get_parent"
       parameters:
       - name: "entity_name"
         in: "path"
@@ -71,13 +73,13 @@ paths:
         "400":
           description: "Invalid parameters supplied"
 
-  /ponto/getChildren/{entity_name}:
+  /kbm/getChildren/{entity_name}:
     get:
       tags:
-      - "ponto"
+      - "kbm"
       summary: "get the children of a specific entity"
       description: ""
-      operationId: "ponto_get_children"
+      operationId: "kbm_get_children"
       parameters:
       - name: "entity_name"
         in: "path"
@@ -92,13 +94,13 @@ paths:
         "400":
           description: "Invalid parameters supplied"
 
-  /ponto/defineEntity/{entity_name}:
+  /kbm/defineEntity/{entity_name}:
     get:
       tags:
-      - "ponto"
+      - "kbm"
       summary: "get the definition of a specific entity"
       description: ""
-      operationId: "ponto_define_entity"
+      operationId: "kbm_define_entity"
       parameters:
       - name: "entity_name"
         in: "path"
@@ -112,6 +114,37 @@ paths:
           description: "Exception was raised"
         "400":
           description: "Invalid parameters supplied"
+
+  /kbm/sparql_query:
+    get:
+      tags:
+      - "kbm"
+      summary: "query using sparql query language"
+      description: ""
+      operationId: "sparql_query"
+      responses:
+        "200":
+          description: "successful operation"
+        "304":
+          description: "Exception was raised"
+        "400":
+          description: "Invalid parameters supplied"
+
+  /kbm/knowledge_injection:
+    get:
+      tags:
+      - "kbm"
+      summary: "injection of knowledge specified in a turtle file"
+      description: ""
+      operationId: "inject_turtle"
+      responses:
+        "200":
+          description: "successful operation"
+        "304":
+          description: "Exception was raised"
+        "400":
+          description: "Invalid parameters supplied"
+
 
 externalDocs:
   description: "Find out more about PAP"

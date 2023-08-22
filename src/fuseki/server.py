@@ -5,17 +5,13 @@ from pyfuseki import FusekiUpdate
 # mapping a few of the operations listed on fuseki documentation
 # see: https://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html#adding-a-dataset-and-its-services
 
-# FUSEKI_BASE_URL = "http://127.0.0.1:3030"
-
-FUSEKI_BASE_URL = "http://fuseki:3030"
-
-# FUSEKI_BASE_URL = "http://localhost:3030"
-
 class FusekiServer:
     http:Http = None
+    fuseki_base_url = ""
 
-    def __init__(self):
-        self.http = Http(FUSEKI_BASE_URL)
+    def __init__(self, fuseki_base_url="http://fuseki:3030"):
+        self.fuseki_base_url = fuseki_base_url
+        self.http = Http(fuseki_base_url)
 
     def create_ponto_dataset(self, path_ponto):
         print ("create_ponto_dataset")
@@ -32,7 +28,7 @@ class FusekiServer:
             g = Graph()
             g.parse(path_ponto, format='ttl')
 
-            fuseki = FusekiUpdate(FUSEKI_BASE_URL, 'POnto')
+            fuseki = FusekiUpdate(self.fuseki_base_url, 'POnto')
             fuseki.insert_graph(g)
             print ("all done")
 

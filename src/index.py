@@ -32,27 +32,27 @@ def get_spec():
 
 
 ### POnto ###
-@app.route('/ponto/getConcepts', methods=['GET'])
-def ponto_get_concepts():
+@app.route('/kbm/getConcepts', methods=['GET'])
+def kbm_get_concepts():
     allc = Ponto.get_all_classes()
     return reply_list(allc, ok_status_code)
 
-@app.route('/ponto/getProperties', methods=['GET'])
-def ponto_get_properties():
+@app.route('/kbm/getProperties', methods=['GET'])
+def kbm_get_properties():
     allp = Ponto.get_all_properties()
     return reply_list(allp, ok_status_code)
 
-@app.route('/ponto/getParent/<entity_name>', methods=['GET'])
-def ponto_get_parent(entity_name:str):
+@app.route('/kbm/getParent/<entity_name>', methods=['GET'])
+def kbm_get_parent(entity_name:str):
     eclass = Ponto.get_entity_class(entity_name)
     return reply_list(eclass, ok_status_code)
 
-@app.route('/ponto/getChildren/<entity_name>', methods=['GET'])
-def ponto_get_children(entity_name:str):
+@app.route('/kbm/getChildren/<entity_name>', methods=['GET'])
+def kbm_get_children(entity_name:str):
     sclasses = Ponto.get_entity_subclasses(entity_name)
     return reply_list(sclasses, ok_status_code)
 
-@app.route('/ponto/defineEntity/<entity_name>', methods=['GET'])
-def ponto_define_entity(entity_name:str):
+@app.route('/kbm/defineEntity/<entity_name>', methods=['GET'])
+def kbm_define_entity(entity_name:str):
     eclass = Ponto.define_entity(entity_name)
     return reply_list(eclass, ok_status_code)

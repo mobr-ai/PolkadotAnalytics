@@ -3,10 +3,7 @@ import json
 import SPARQLWrapper
 from pyfuseki import FusekiQuery
 
-from fuseki.server import FUSEKI_BASE_URL
-
 class Ponto:
-    fuseki_query:FusekiQuery = FusekiQuery(FUSEKI_BASE_URL, 'POnto')
     ponto_prefix = "http://www.mobr.ai/ontologies/ponto#"
     sparql_prefix = """
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -15,6 +12,7 @@ class Ponto:
         PREFIX ponto: <http://www.mobr.ai/ontologies/ponto#>
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     """
+    fuseki_base_url = ""
 
     def check_name(short_name:str) -> str:
         return short_name.replace(Ponto.ponto_prefix, '').replace("ponto:", '')
@@ -29,8 +27,9 @@ class Ponto:
 
     def run_sparql(sparql_str, tripple_term="tt") -> list:
         values = list()
+        fuseki_query:FusekiQuery = FusekiQuery(Ponto.fuseki_base_url, 'POnto')
 
-        fuseki_result = Ponto.fuseki_query.run_sparql(sparql_str)
+        fuseki_result = fuseki_query.run_sparql(sparql_str)
         bindings = Ponto.extract_bindings(fuseki_result)
         if bindings:
             for b in bindings:

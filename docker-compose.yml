@@ -21,7 +21,7 @@ services:
                         - 80:80
                 depends_on:
                         - fuseki
-                command: [ "./wait-for-it.sh", "-t", "20", "fuseki:3030", "--", "python", "app.py", "-pp", "/usr/src/pap/POnto.ttl" ]
+                command: [ "./wait-for-it.sh", "-t", "20", "fuseki:3030", "--", "python", "app.py", "-pp", "/usr/src/pap/POnto.ttl", "-fu",  "http://fuseki:3030"]
                 container_name: pap
 
 # services:
