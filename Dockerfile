@@ -11,13 +11,13 @@ RUN set -eux; \
     rm -rf /var/cache/apk/*
 
 # addressing our platform dependencies
-RUN mkdir -p /usr/src/pap/
+RUN mkdir -p /usr/src/polkadot/
 
-WORKDIR /usr/src/pap/
+WORKDIR /usr/src/polkadot/
 ADD . .
 RUN pip install -r requirements.txt && \
     wget https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl
 
 EXPOSE 5000
 
-WORKDIR /usr/src/pap/src
+WORKDIR /usr/src/polkadot/pap

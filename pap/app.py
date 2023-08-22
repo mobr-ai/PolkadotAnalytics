@@ -3,9 +3,9 @@ import sys
 from argparse import ArgumentParser
 from flask_compress import Compress
 
-from index import *
-from fuseki.kbm import KBM
-from fuseki.dataset import DatasetManager
+from pap.index import app
+from pap.fuseki.kbm import KBM
+from pap.fuseki.dataset import DatasetManager
 
 if sys.version_info[0] < 3:
     raise Exception("Python 2.x is not supported. Please upgrade to 3.x")
@@ -16,7 +16,7 @@ Compress(app)
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-pp", "--ponto-url", dest="path_ponto", required=True, 
-                        help="specify the local url to the flat ponto turtle file. e.g.: /usr/local/src/kbm/src/flat/POnto.ttl")
+                        help="specify the local url to the flat ponto turtle file. e.g.: /usr/local/src/POnto/src/flat/POnto.ttl")
     parser.add_argument("-fu", "--fuseki-url", dest="fbu", default="http://127.0.0.1:3030", 
                         help="specify the url to access fuseki-server frontend. e.g.: http://127.0.0.1:3030")
 

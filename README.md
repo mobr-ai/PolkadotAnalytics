@@ -53,7 +53,7 @@ https://jena.apache.org/download/
 fuseki-server --update --tdb2
 
 # run http flask server
-cd src
+cd pap
 python app.py -pp <url_to_ponto_flat_file>
 ```
 
