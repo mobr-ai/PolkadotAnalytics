@@ -44,9 +44,6 @@ wget https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl
 # on mac
 brew install fuseki jena
 
-# on Ubuntu linux
-apt-get -y install libapache-jena-java
-
 # or you can get the binaries on
 https://jena.apache.org/download/ 
 ```
