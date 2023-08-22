@@ -16,11 +16,11 @@ The Polkadot Analytics Platform aims at building a comprehensive data analysis a
 
 <br>
 
-# How to
+# How to run a. locally or b. on docker
 
 <br>
 
-## Run locally on your computer
+## a. Run locally on your computer
 
 <br>
 
@@ -69,7 +69,7 @@ using your browser, you can access:
 
 <br>
 
-## Run on docker
+## b. Run on docker
 
 ## 1. building and running docker images
 
