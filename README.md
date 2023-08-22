@@ -38,7 +38,7 @@ git clone https://github.com/mobr-ai/PolkadotAnalytics.git
 pip install -r requirements.txt
 
 # POnto flat file: 
-wget https://raw.githubusercontent.com/mobr-ai/kbm/main/src/flat/POnto.ttl
+wget https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl
 
 # Fuseki and jena: 
 # on mac

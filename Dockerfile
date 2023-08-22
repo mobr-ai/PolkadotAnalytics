@@ -20,7 +20,7 @@ RUN mkdir -p /usr/src/pap/
 WORKDIR /usr/src/pap/
 ADD . .
 RUN pip install -r requirements.txt && \
-    wget https://raw.githubusercontent.com/mobr-ai/kbm/main/src/flat/POnto.ttl
+    wget https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl
 
 EXPOSE 80
 
