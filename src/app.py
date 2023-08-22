@@ -4,8 +4,8 @@ from argparse import ArgumentParser
 from flask_compress import Compress
 
 from index import *
-from fuseki.ponto import Ponto
-from fuseki.server import FusekiServer
+from fuseki.kbm import KBM
+from fuseki.dataset import DatasetManager
 
 if sys.version_info[0] < 3:
     raise Exception("Python 2.x is not supported. Please upgrade to 3.x")
@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    Ponto.fuseki_base_url = args.fbu
-    fs = FusekiServer(args.fbu)
+    KBM.fuseki_base_url = args.fbu
+    fs = DatasetManager(args.fbu)
     fs.create_ponto_dataset(args.path_ponto)
     app.run(host="0.0.0.0", port=5000, debug=False, threaded=False)

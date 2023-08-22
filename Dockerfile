@@ -1,8 +1,4 @@
-# using the jena-fuseki Docker image
-#     Alpine Linux
-#     OpenJDK
-#     Apache Jena
-
+# reusing the alpine docker image
 FROM python:3.9.13-alpine3.16
 
 # setting metadata mobr as maintainer

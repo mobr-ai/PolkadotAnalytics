@@ -38,6 +38,19 @@ def patch_https_connection_pool(**constructor_kwargs):
     poolmanager.pool_classes_by_scheme['https'] = MyHTTPSConnectionPool
 
 class Http:
+    """
+    Http Class
+
+    Class to abstract the http protocol funcionalities.
+
+    ...
+
+    Attributes
+    ----------
+    base_url : str
+        the url to access the targeted http server
+    """
+
     base_url = ''
 
     def __init__(self, base_url='https://127.0.0.1:5000') -> None:

@@ -115,13 +115,24 @@ paths:
         "400":
           description: "Invalid parameters supplied"
 
-  /kbm/sparql_query:
+  /kbm/sparql_query/{sparql_spec}/{select_term}:
     get:
       tags:
       - "kbm"
-      summary: "query using sparql query language"
+      summary: "get the results of a query using sparql query language"
       description: ""
-      operationId: "sparql_query"
+      operationId: "kbm_sparql_query"
+      parameters:
+      - name: "sparql_spec"
+        in: "path"
+        description: "Complete sparql query specifications, including prefixes"
+        required: true
+        type: "string"
+      - name: "select_term"
+        in: "path"
+        description: "Term of interest in the sparql query. E.g., some for a query like SELECT ?some ..."
+        required: true
+        type: "string"
       responses:
         "200":
           description: "successful operation"
@@ -136,7 +147,7 @@ paths:
       - "kbm"
       summary: "injection of knowledge specified in a turtle file"
       description: ""
-      operationId: "inject_turtle"
+      operationId: "kbm_knowledge_injection"
       responses:
         "200":
           description: "successful operation"

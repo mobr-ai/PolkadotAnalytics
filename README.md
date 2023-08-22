@@ -16,7 +16,12 @@ The Polkadot Analytics Platform aims at building a comprehensive data analysis a
 
 <br>
 
-# How to run a. locally or b. on docker
+# How to run locally (see section a) or on docker (see section b)
+
+## First of all, clone this repository: 
+```
+git clone https://github.com/mobr-ai/PolkadotAnalytics.git
+```
 
 <br>
 
@@ -24,14 +29,7 @@ The Polkadot Analytics Platform aims at building a comprehensive data analysis a
 
 <br>
 
-## 1. clone this repository: 
-```
-git clone https://github.com/mobr-ai/PolkadotAnalytics.git
-```
-
-<br>
-
-## 2. install dependencies
+## a.1) install dependencies
 
 ```bash
 # python packages
@@ -48,7 +46,7 @@ brew install fuseki jena
 https://jena.apache.org/download/ 
 ```
 
-## 3. fuseki and http servers
+## a.2) fuseki and http servers
 
 ```bash
 # run fuseki server
@@ -61,17 +59,7 @@ python app.py -pp <url_to_ponto_flat_file>
 
 <br>
 
-## 4. accessing the services
-
-using your browser, you can access:
-- the jena dataset: http://127.0.0.1:3030
-- the platform: http://127.0.0.1:5000
-
-<br>
-
 ## b. Run on docker
-
-## 1. building and running docker images
 
 ```bash
 # building our Jena-Fuseki image
@@ -89,8 +77,9 @@ docker compose build
 docker compose up
 ```
 
-## 2. accessing the services
+# How to access the services
 
 using your browser, you can access:
-- the jena dataset: http://127.0.0.1:3030
-- the platform: http://127.0.0.1:5000
+- the fuseki server frontend: http://127.0.0.1:3030
+- the platform frontend: http://127.0.0.1:5000
+- the platform swagger UI: http://127.0.0.1:5000/swagger
