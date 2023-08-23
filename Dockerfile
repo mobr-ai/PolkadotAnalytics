@@ -15,7 +15,7 @@ RUN mkdir -p /usr/src/polkadot/
 
 WORKDIR /usr/src/polkadot/
 ADD . .
-RUN pip install -r requirements.txt && \
-    wget https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl
+RUN pip install -r requirements.txt
 
+# exposing platform port
 EXPOSE 5000

@@ -1,15 +1,13 @@
-import os, json
-from flask import Flask, render_template, jsonify, make_response, send_from_directory
+import os
+from flask import Flask, render_template, jsonify, send_from_directory, request
+from urllib.parse import unquote
+from werkzeug.utils import secure_filename
 
 from fuseki.kbm import KBM
 
-ok_status_code = 200
+PONTO_URL = "https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl"
 
 app = Flask(__name__)
-
-def reply_list(resp_list:list, status_code:int):
-    str_res = json.dumps(resp_list)
-    return make_response(jsonify(str_res), status_code)
 
 ### FE entry point ###
 @app.route('/', methods=['POST', 'GET'])
@@ -35,34 +33,38 @@ def get_spec():
 @app.route('/kbm/getConcepts', methods=['GET'])
 def kbm_get_concepts():
     allc = KBM.get_all_classes()
-    return reply_list(allc, ok_status_code)
+    return jsonify(allc)
 
 @app.route('/kbm/getProperties', methods=['GET'])
 def kbm_get_properties():
     allp = KBM.get_all_properties()
-    return reply_list(allp, ok_status_code)
+    return jsonify(allp)
 
 @app.route('/kbm/getParent/<entity_name>', methods=['GET'])
 def kbm_get_parent(entity_name:str):
     eclass = KBM.get_entity_class(entity_name)
-    return reply_list(eclass, ok_status_code)
+    return jsonify(eclass)
 
 @app.route('/kbm/getChildren/<entity_name>', methods=['GET'])
 def kbm_get_children(entity_name:str):
     sclasses = KBM.get_entity_subclasses(entity_name)
-    return reply_list(sclasses, ok_status_code)
+    return jsonify(sclasses)
 
 @app.route('/kbm/defineEntity/<entity_name>', methods=['GET'])
 def kbm_define_entity(entity_name:str):
     eclass = KBM.define_entity(entity_name)
-    return reply_list(eclass, ok_status_code)
+    return jsonify(eclass)
 
-@app.route('/kbm/sparql_query/<sparql_spec>/<select_term>', methods=['GET'])
-def kbm_sparql_query(sparql_spec:str, select_term:str):
-    eclass = KBM.run_sparql(sparql_spec, select_term)
-    return reply_list(eclass, ok_status_code)
+@app.route('/kbm/sparql_query/<select_term>/<path:sparql_spec>', methods=['GET'])
+def kbm_sparql_query(select_term, sparql_spec):
+    eclass = KBM.run_sparql(sparql_str=unquote(sparql_spec), tripple_term=select_term)
+    return jsonify(eclass)
 
-@app.route('/kbm/knowledge_injection/<turtle_file>', methods=['PUT'])
-def kbm_knowledge_injection(turtle_file:str):
-    KBM.inject_turtle_file(turtle_file)
-    return make_response(jsonify("knowledge injected", ok_status_code))
+@app.route('/kbm/knowledge_injection', methods=['POST'])
+def kbm_knowledge_injection():
+    file = request.files['turtle_file']
+    filename = secure_filename(file.filename)
+    file.save(filename)
+
+    KBM.inject_turtle_file(filename)
+    return jsonify("knowledge injected")

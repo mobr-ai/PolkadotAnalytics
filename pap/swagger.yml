@@ -115,22 +115,22 @@ paths:
         "400":
           description: "Invalid parameters supplied"
 
-  /kbm/sparql_query/{sparql_spec}/{select_term}:
+  /kbm/sparql_query/{select_term}/{sparql_spec}:
     get:
       tags:
       - "kbm"
-      summary: "get the results of a query using sparql query language"
+      summary: "get result of a query using sparql query language"
       description: ""
       operationId: "kbm_sparql_query"
       parameters:
-      - name: "sparql_spec"
-        in: "path"
-        description: "Complete sparql query specifications, including prefixes"
-        required: true
-        type: "string"
       - name: "select_term"
         in: "path"
         description: "Term of interest in the sparql query. E.g., some for a query like SELECT ?some ..."
+        required: true
+        type: "string"
+      - name: "sparql_spec"
+        in: "path"
+        description: "Complete sparql query specifications, including prefixes"
         required: true
         type: "string"
       responses:
@@ -142,12 +142,20 @@ paths:
           description: "Invalid parameters supplied"
 
   /kbm/knowledge_injection:
-    get:
+    post:
       tags:
       - "kbm"
       summary: "injection of knowledge specified in a turtle file"
       description: ""
       operationId: "kbm_knowledge_injection"
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: turtle_file
+        in: formData
+        description: Turtle file to be injected
+        required: true
+        type: file
       responses:
         "200":
           description: "successful operation"

@@ -19,7 +19,7 @@ class KBM:
         PREFIX ponto: <http://www.mobr.ai/ontologies/ponto#>
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     """
-    fuseki_base_url = ""
+    fuseki_base_url = "http://127.0.0.1:3030"
 
     def check_name(short_name:str) -> str:
         return short_name.replace(KBM.ponto_prefix, '').replace("ponto:", '')

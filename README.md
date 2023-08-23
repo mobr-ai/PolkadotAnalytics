@@ -53,7 +53,7 @@ https://jena.apache.org/download/
 fuseki-server --update --tdb2
 
 # run http flask server
-python pap/app.py -pp <url_to_ponto_flat_file>
+python pap/app.py
 ```
 
 <br>
@@ -88,6 +88,11 @@ using your browser, you can access:
 ```bash
 # first make sure you have pytest
 pip install pytest
+
+# then make sure you have fuseki-server running
+fuseki-server --update --tdb2
+
+# now you can start testing...
 
 # testing http endpoints
 python -m pytest pap/tests/test_app.py

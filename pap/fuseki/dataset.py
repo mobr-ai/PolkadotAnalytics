@@ -4,6 +4,11 @@ from fuseki.kbm import KBM
 # mapping a few of the operations listed on fuseki documentation
 # see: https://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html#adding-a-dataset-and-its-services
 
+def create_ponto_dataset(ponto_url:str, fuseki_base_url:str="http://127.0.0.1:3030"):
+    KBM.fuseki_base_url = fuseki_base_url
+    dm = DatasetManager(fuseki_base_url)
+    dm.create_ponto_dataset(ponto_url)
+
 class DatasetManager:
     """
     Fuseki Server Class
@@ -29,7 +34,6 @@ class DatasetManager:
     def create_ponto_dataset(self, path_ponto):
         dsi = self.get_dataset_info("POnto")
         if dsi:
-            print ("dataset already exists")
             return
 
         r = self.create_dataset("POnto")
