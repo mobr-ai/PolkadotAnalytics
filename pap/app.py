@@ -13,6 +13,12 @@ Compress(app)
 
 # BE entry point
 if __name__ == "__main__":
+    """
+    This is the flask app entry point.
+    It sets the path to access the fuseki-server api, creates the ponto dataset and then run the flask app server.
+    Details on how to set the fuseki-server base url, read help by giving the following command: python app.py --help 
+    """
+
     parser = ArgumentParser()
     parser.add_argument("-fu", "--fuseki-url", dest="fbu", default="http://127.0.0.1:3030", 
                         help="specify the url to access fuseki-server frontend. e.g.: http://127.0.0.1:3030")

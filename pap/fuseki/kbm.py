@@ -26,9 +26,15 @@ class KBM:
     ###
 
     def check_name(short_name:str) -> str:
+        """
+        Method to make name short_name uniform, removing any POnto prefix present in it.
+        """
         return short_name.replace(KBM.ponto_prefix, '').replace("ponto:", '')
 
     def extract_bindings(query_result:SPARQLWrapper.Wrapper.QueryResult) -> dict:
+        """
+        Extracts bindings from the query_results, returning them as a dict
+        """
         rd = json.loads(query_result.response.read().decode("utf-8"))
         if type(rd) is dict:
             if 'results' in rd and 'bindings' in rd['results']:
@@ -40,6 +46,9 @@ class KBM:
     # crud
     ###
     def inject_turtle_file(turtle_file_uri:str):
+        """
+        Method to parse a turtle file into an RDF graph and then injects this graph in the POnto dataset
+        """
         g = Graph()
         g.parse(turtle_file_uri, format='ttl')
 
@@ -47,6 +56,11 @@ class KBM:
         fuseki.insert_graph(g)
 
     def get_triples_with_entity(entity_name:str, spo:str='s') -> str:
+        """
+        Gets all triples where the entity_name appears as a subjec, 
+        a predicate or as an object, according to what is specified
+        in the spo parameter
+        """
         name = KBM.check_name(entity_name)
 
         if spo == 's':
@@ -67,6 +81,11 @@ class KBM:
         return KBM.run_sparql(sparql_str)
 
     def update_entity(entity_old_name:str, entity_new_name:str, spo:str='s'):
+        """
+        Updates the occurences of the entity_old_name with entity_new name in
+        all triples where the entity_old_name appears as a subjec, a predicate
+        or as an object, according to what is specified in the spo parameter.
+        """
         old_name = KBM.check_name(entity_old_name)
         new_name = KBM.check_name(entity_new_name)
 
@@ -98,6 +117,11 @@ class KBM:
         fuseki.run_sparql(sparql_str=sparql_str)
 
     def delete_entity(entity_name:str, spo:str='s'):
+        """
+        Deletes the occurences of the entity_name in all triples where the
+        entity_name appears as a subjec, a predicate or as an object,
+        according to what is specified in the spo parameter.
+        """
         name = KBM.check_name(entity_name)
         if spo == 's':
             sparql_spec = f'ponto:{name} ?p ?o .'
@@ -120,6 +144,10 @@ class KBM:
     ###
 
     def run_sparql(sparql_str, tripple_term="tt") -> list:
+        """
+        Runs the sparql query specified in sparql_str, returning all the results where
+        the term tripple_term appears.
+        """
         values = list()
         fuseki_query:FusekiQuery = FusekiQuery(KBM.fuseki_base_url, KBM.fuseki_endpoint)
 
@@ -136,6 +164,9 @@ class KBM:
         return values
 
     def get_entity_comment(entity_name:str) -> str:
+        """
+        Gets all the comment value specified for an entity named entity_name
+        """
         name = KBM.check_name(entity_name)
         sparql_spec = f'ponto:{name} rdfs:comment ?tt'
         sparql_str = KBM.sparql_prefix + """
@@ -149,6 +180,9 @@ class KBM:
         return KBM.run_sparql(sparql_str)
 
     def get_entity_class(entity_name:str) -> str:
+        """
+        Gets the class of an entity named entity_name
+        """
         name = KBM.check_name(entity_name)
         sparql_spec = f'ponto:{name} rdfs:subClassOf ?tt'
         sparql_str = KBM.sparql_prefix + """
@@ -162,6 +196,9 @@ class KBM:
         return KBM.run_sparql(sparql_str)
 
     def get_entity_subclasses(entity_name:str) -> list:
+        """
+        Gets all subclasses of the class named entity_name
+        """
         name = KBM.check_name(entity_name)
         sparql_spec = f'?tt rdfs:subClassOf ponto:{name}'
         sparql_str = KBM.sparql_prefix + """
@@ -175,6 +212,9 @@ class KBM:
         return KBM.run_sparql(sparql_str)
 
     def get_all_classes() -> set:
+        """
+        Gets all classes described in the POnto dataset
+        """
         sparql_str = KBM.sparql_prefix + """
             SELECT DISTINCT ?tt
             WHERE {
@@ -191,6 +231,9 @@ class KBM:
         return KBM.run_sparql(sparql_str)
 
     def get_all_properties() -> set:
+        """
+        Gets all properties described in the POnto dataset
+        """
         sparql_str = KBM.sparql_prefix + """
             SELECT DISTINCT ?tt
             WHERE
@@ -202,6 +245,12 @@ class KBM:
         return KBM.run_sparql(sparql_str)
 
     def define_entity(entity_name):
+        """
+        Gets the definition of the entity_name entity
+        """
+
+        #TODO: update this query with string pattern matching
+
         name = KBM.check_name(entity_name)
         sparql_spec = f'ponto:{name} rdfs:comment ?tt .'
         sparql_str = KBM.sparql_prefix + """
@@ -213,6 +262,3 @@ class KBM:
         """
 
         return KBM.run_sparql(sparql_str)
-
-    def get_all_instances() -> set:
-        pass

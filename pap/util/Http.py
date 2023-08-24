@@ -48,16 +48,25 @@ class Http:
     Attributes
     ----------
     base_url : str
-        the url to access the targeted http server
+        the url to access the targeted http(s) server
+    session : requests.Session
+        requests session for this http(s) session
     """
 
     base_url = ''
 
     def __init__(self, base_url='https://127.0.0.1:5000') -> None:
+        """
+        Initialize the Http class with the url to access the targeted http(s) server
+        """
         self.base_url = base_url
         self.session = requests.Session()
 
-    def _send_message(self, method, endpoint, params=None, data=None, headers=None):
+    def _send_message(self, method:str, endpoint:str, params=None, data=None, headers=None):
+        """
+        Sends a message using a specific http method (i.e. get, post, put, delete) on the specified endpoint.
+        To send parameters and data you can use params and data. Headers specify the http headers for this message.
+        """
         response = None
         try:
             url = self.base_url + endpoint
@@ -82,13 +91,29 @@ class Http:
         return resp_json
 
     def _get(self, endpoint, params=None):
+        """
+        Sends a message using the GET http method on the specified endpoint.
+        To send parameters you can use params.
+        """
         return self._send_message('GET', endpoint, params=params)
 
     def _put(self, endpoint, params=None, data=None, headers=None):
+        """
+        Sends a message using the PUT http method on the specified endpoint.
+        To send parameters and data you can use params and data. Headers specify the http headers for this message.
+        """
         return self._send_message('PUT', endpoint, params=params, data=data, headers=headers)
 
     def _post(self, endpoint, params=None, data=None, headers=None):
+        """
+        Sends a message using the POST http method on the specified endpoint.
+        To send parameters and data you can use params and data. Headers specify the http headers for this message.
+        """
         return self._send_message('POST', endpoint, params=params, data=data, headers=headers)
 
     def _delete(self, endpoint, params=None):
+        """
+        Sends a message using the DELETE http method on the specified endpoint.
+        To send parameters you can use params.
+        """
         return self._send_message('DELETE', endpoint, params=params)

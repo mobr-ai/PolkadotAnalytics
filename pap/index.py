@@ -5,9 +5,17 @@ from werkzeug.utils import secure_filename
 
 from fuseki.kbm import KBM
 
+
+"""
+index.py
+
+All the http server routes are specified in this file. see the swagger UI documentation for more details
+"""
+
 PONTO_URL = "https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl"
 
 app = Flask(__name__)
+
 
 ### FE entry point ###
 @app.route('/', methods=['POST', 'GET'])
