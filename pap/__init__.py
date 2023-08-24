@@ -1,0 +1,1 @@
+"""pap, a Polkadot Analytics Platform"""

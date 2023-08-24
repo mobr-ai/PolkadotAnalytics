@@ -1,10 +1,13 @@
 import unittest
 
-from fuseki.dataset import create_ponto_dataset
-from index import PONTO_URL
-from fuseki.kbm import KBM
+from pap.fuseki.dataset import create_ponto_dataset
+from pap.index import PONTO_URL
+from pap.fuseki.kbm import KBM
 
 def get_test_sparql_spec(entity_name:str) -> str:
+    """
+    Function to reuse the test sparql query with different entity names
+    """
     name = KBM.check_name(entity_name)
     sparql_s_spec = f"ponto:{name} ?p ?o ."
     sparql_o_spec = f"?s ?p ponto:{name} ."
@@ -22,6 +25,10 @@ def get_test_sparql_spec(entity_name:str) -> str:
     """
 
 class KBTestCase(unittest.TestCase):
+    """
+    Testing KB CRUD operations
+    """
+
     def setUp(self):
         create_ponto_dataset(PONTO_URL)
 
@@ -29,11 +36,9 @@ class KBTestCase(unittest.TestCase):
 
         # (C) creating with knowledge inject
         KBM.inject_turtle_file("test.ttl")
-        sparql_spec = get_test_sparql_spec("MOBRChain")
-
-        print(sparql_spec)
 
         # (R) reading to check if all the 3 triple were injected
+        sparql_spec = get_test_sparql_spec("MOBRChain")
         l = KBM.run_sparql(sparql_spec, "*")
         assert len(l) == 3
 

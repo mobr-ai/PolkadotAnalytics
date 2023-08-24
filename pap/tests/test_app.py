@@ -3,10 +3,14 @@ from urllib.parse import quote
 from werkzeug.datastructures import FileStorage
 
 
-from fuseki.dataset import create_ponto_dataset
-from index import app, PONTO_URL
+from pap.fuseki.dataset import create_ponto_dataset
+from pap.index import app, PONTO_URL
 
 class AppTestCase(unittest.TestCase):
+    """
+    Testing http endpoints
+    """
+
     def setUp(self):
         app.config['DEBUG'] = True
         app.config['TESTING'] = True

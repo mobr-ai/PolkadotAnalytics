@@ -1,8 +1,12 @@
 import unittest
 
-from fuseki.dataset import DatasetManager
+from pap.fuseki.dataset import DatasetManager
 
-class KBTestCase(unittest.TestCase):
+class DatasetTestCase(unittest.TestCase):
+    """
+    Testing Dataset CRD operations
+    """
+
     def setUp(self):
         self.dm = DatasetManager()
 

@@ -1,10 +1,13 @@
-from util.Http import Http
-from fuseki.kbm import KBM
+from pap.util.Http import Http
+from pap.fuseki.kbm import KBM
 
 # mapping a few of the operations listed on fuseki documentation
 # see: https://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html#adding-a-dataset-and-its-services
 
 def create_ponto_dataset(ponto_url:str, fuseki_base_url:str="http://127.0.0.1:3030"):
+    """
+    Function to create the POnto dataset in the fuseki server if it does not exist, and injects the POnto ontology in it.
+    """
     KBM.fuseki_base_url = fuseki_base_url
     dm = DatasetManager(fuseki_base_url)
     dm.create_ponto_dataset(ponto_url)

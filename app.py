@@ -3,8 +3,8 @@ import sys
 from argparse import ArgumentParser
 from flask_compress import Compress
 
-from index import app, PONTO_URL
-from fuseki.dataset import create_ponto_dataset
+from pap.index import app, PONTO_URL
+from pap.fuseki.dataset import create_ponto_dataset
 
 if sys.version_info[0] < 3:
     raise Exception("Python 2.x is not supported. Please upgrade to 3.x")

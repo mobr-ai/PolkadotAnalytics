@@ -53,7 +53,7 @@ https://jena.apache.org/download/
 fuseki-server --update --tdb2
 
 # run http flask server
-python pap/app.py
+python app.py
 ```
 
 <br>
@@ -105,4 +105,14 @@ python -m pytest pap/tests/test_dataset.py
 
 # runing all tests
 python -m pytest pap/tests/
+```
+
+# Python code documentation
+
+```bash
+# documentation generated automatically using pdoc3
+# to regenerate it use the following command
+# make sure you have pdoc3 installed
+#     pip install pdoc3
+pdoc --html -o docs pap
 ```
