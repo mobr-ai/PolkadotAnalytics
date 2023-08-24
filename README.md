@@ -109,9 +109,13 @@ python -m pytest pap/tests/
 
 # Python code documentation
 
+Documentation of python source code available on ./docs/pap
+
+The documentation was generated automatically using pdoc3
+
+To regenerate it use the following command
+
 ```bash
-# documentation generated automatically using pdoc3
-# to regenerate it use the following command
 # make sure you have pdoc3 installed
 #     pip install pdoc3
 pdoc --html -o docs pap
