@@ -96,4 +96,13 @@ fuseki-server --update --tdb2
 
 # testing http endpoints
 python -m pytest pap/tests/test_app.py
+
+# testing kb crud operations
+python -m pytest pap/tests/test_kb.py
+
+# testing dataset crd operations
+python -m pytest pap/tests/test_dataset.py
+
+# runing all tests
+python -m pytest pap/tests/
 ```
