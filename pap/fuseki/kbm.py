@@ -20,6 +20,10 @@ class KBM:
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     """
     fuseki_base_url = "http://127.0.0.1:3030"
+    fuseki_endpoint = "POnto"
+
+    # utils
+    ###
 
     def check_name(short_name:str) -> str:
         return short_name.replace(KBM.ponto_prefix, '').replace("ponto:", '')
@@ -32,21 +36,108 @@ class KBM:
 
         return dict()
 
+
+    # crud
+    ###
+    def inject_turtle_file(turtle_file_uri:str):
+        g = Graph()
+        g.parse(turtle_file_uri, format='ttl')
+
+        fuseki = FusekiUpdate(KBM.fuseki_base_url, KBM.fuseki_endpoint)
+        fuseki.insert_graph(g)
+
+    def get_triples_with_entity(entity_name:str, spo:str='s') -> str:
+        name = KBM.check_name(entity_name)
+
+        if spo == 's':
+            sparql_spec = f'ponto:{name} ?p ?o'
+        elif spo == 'p':
+            sparql_spec = f'?s ponto:{name} ?o'
+        else:
+            sparql_spec = f'?s ?p ponto:{name}'
+
+        sparql_str = KBM.sparql_prefix + """
+            SELECT *
+            WHERE
+            {
+                """ + sparql_spec + """
+            }
+        """
+
+        return KBM.run_sparql(sparql_str)
+
+    def update_entity(entity_old_name:str, entity_new_name:str, spo:str='s'):
+        old_name = KBM.check_name(entity_old_name)
+        new_name = KBM.check_name(entity_new_name)
+
+        if spo == 's':
+            sparql_old = f'ponto:{old_name} ?p ?o .'
+            sparql_new = f'ponto:{new_name} ?p ?o .'
+        elif spo == 'p':
+            sparql_old = f'?s ponto:{old_name} ?o .'
+            sparql_new = f'?s ponto:{new_name} ?o .'
+        else:
+            sparql_old = f'?s ?p ponto:{old_name} .'
+            sparql_new = f'?s ?p ponto:{new_name} .'
+
+        sparql_str = KBM.sparql_prefix + """
+            DELETE {
+                """ + sparql_old + """
+            }
+            INSERT
+            {
+                """ + sparql_new + """
+            }
+            WHERE
+            {
+                """ + sparql_old + """
+            }
+        """
+
+        fuseki = FusekiUpdate(KBM.fuseki_base_url, KBM.fuseki_endpoint)
+        fuseki.run_sparql(sparql_str=sparql_str)
+
+    def delete_entity(entity_name:str, spo:str='s'):
+        name = KBM.check_name(entity_name)
+        if spo == 's':
+            sparql_spec = f'ponto:{name} ?p ?o .'
+        elif spo == 'p':
+            sparql_spec = f'?s ponto:{name} ?o .'
+        else:
+            sparql_spec = f'?s ?p ponto:{name} .'
+
+        sparql_str = KBM.sparql_prefix + """
+            delete where
+            {
+                """ + sparql_spec + """
+            }
+        """
+
+        fuseki = FusekiUpdate(KBM.fuseki_base_url, KBM.fuseki_endpoint)
+        fuseki.run_sparql(sparql_str=sparql_str)
+
+    # queries
+    ###
+
     def run_sparql(sparql_str, tripple_term="tt") -> list:
         values = list()
-        fuseki_query:FusekiQuery = FusekiQuery(KBM.fuseki_base_url, 'POnto')
+        fuseki_query:FusekiQuery = FusekiQuery(KBM.fuseki_base_url, KBM.fuseki_endpoint)
 
         fuseki_result = fuseki_query.run_sparql(sparql_str)
         bindings = KBM.extract_bindings(fuseki_result)
         if bindings:
             for b in bindings:
-                if tripple_term in b:
+                if tripple_term == '*':
+                    values.append(b)
+
+                elif tripple_term in b:
                     values.append(b[tripple_term]['value'].replace(KBM.ponto_prefix, ''))
 
         return values
 
     def get_entity_comment(entity_name:str) -> str:
-        sparql_spec = f'ponto:{entity_name} rdfs:comment ?tt'
+        name = KBM.check_name(entity_name)
+        sparql_spec = f'ponto:{name} rdfs:comment ?tt'
         sparql_str = KBM.sparql_prefix + """
             SELECT DISTINCT ?tt
             WHERE
@@ -125,10 +216,3 @@ class KBM:
 
     def get_all_instances() -> set:
         pass
-
-    def inject_turtle_file(turtle_file_uri:str):
-        g = Graph()
-        g.parse(turtle_file_uri, format='ttl')
-
-        fuseki = FusekiUpdate(KBM.fuseki_base_url, 'POnto')
-        fuseki.insert_graph(g)

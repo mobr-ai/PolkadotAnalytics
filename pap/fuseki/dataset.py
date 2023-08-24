@@ -51,10 +51,17 @@ class DatasetManager:
         return self.http._get(endpoint)
 
     def create_dataset(self, dataset_name):
-        endpoint = '/$/datasets'
-        params = {"dbType": "tdb2", "dbName": dataset_name}
+        if not self.has_dataset(dataset_name):
+            endpoint = '/$/datasets'
+            params = {"dbType": "tdb2", "dbName": dataset_name}
 
-        return self.http._post(endpoint, params=params)
+            return self.http._post(endpoint, params=params)
+
+        return self.get_dataset_info(dataset_name)
+
+    def has_dataset(self, dataset_name) -> bool:
+        di = self.get_dataset_info(dataset_name)
+        return di and di["ds.name"] == f"/{dataset_name}"
 
     def get_dataset_info(self, dataset_name):
         endpoint = f'/$/datasets/{dataset_name}'
