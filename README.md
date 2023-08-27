@@ -104,7 +104,7 @@ python -m pytest pap/tests/test_kb.py
 python -m pytest pap/tests/test_dataset.py
 
 # runing all tests
-python -m pytest pap/tests/
+python -m pytest pap/tests
 ```
 
 # Python code documentation

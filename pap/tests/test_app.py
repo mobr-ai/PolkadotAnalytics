@@ -1,3 +1,4 @@
+from pathlib import Path
 import unittest
 from urllib.parse import quote
 from werkzeug.datastructures import FileStorage
@@ -87,8 +88,9 @@ class AppTestCase(unittest.TestCase):
         assert "blockchain" in json
 
     def test_knowledge_injection(self):
+        turtle_file = Path('pap/tests/test.ttl').resolve()
         ttl_file = FileStorage(
-            stream=open("test.ttl", "rb"),
+            stream=open(turtle_file, "rb"),
             filename="test.ttl",
             content_type="text/turtle",
         )

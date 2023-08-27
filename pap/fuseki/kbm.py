@@ -47,13 +47,28 @@ class KBM:
     ###
     def inject_turtle_file(turtle_file_uri:str):
         """
-        Method to parse a turtle file into an RDF graph and then injects this graph in the POnto dataset
+        Method to parse a turtle file into the POnto RDF dataset
         """
         g = Graph()
         g.parse(turtle_file_uri, format='ttl')
 
         fuseki = FusekiUpdate(KBM.fuseki_base_url, KBM.fuseki_endpoint)
         fuseki.insert_graph(g)
+
+    def inject_triples(triples:str):
+        """
+        Method to add triples into the POnto dataset
+        """
+
+        sparql_str = KBM.sparql_prefix + """
+            INSERT DATA
+            {
+                """ + triples + """
+            }
+        """
+
+        fuseki = FusekiUpdate(KBM.fuseki_base_url, KBM.fuseki_endpoint)
+        fuseki.run_sparql(sparql_str=sparql_str)
 
     def get_triples_with_entity(entity_name:str, spo:str='s') -> str:
         """

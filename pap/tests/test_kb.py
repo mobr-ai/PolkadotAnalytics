@@ -1,3 +1,4 @@
+from pathlib import Path
 import unittest
 
 from pap.fuseki.dataset import create_ponto_dataset
@@ -32,10 +33,36 @@ class KBTestCase(unittest.TestCase):
     def setUp(self):
         create_ponto_dataset(PONTO_URL)
 
-    def test_crud(self):
+    def test_turtle_injection(self):
+        turtle_file = Path('pap/tests/test.ttl').resolve()
 
         # (C) creating with knowledge inject
-        KBM.inject_turtle_file("test.ttl")
+        KBM.inject_turtle_file(turtle_file)
+
+        # (R) reading to check if all the 3 triple in the turtle file were injected
+        sparql_spec = get_test_sparql_spec("MOBRChain")
+        l = KBM.run_sparql(sparql_spec, "*")
+        assert len(l) == 3
+
+        # (D) deleting MOBRSysChain as subject and then as object
+        KBM.delete_entity("MOBRChain")
+        KBM.delete_entity("MOBRChain", "o")
+
+        # asserting if it was deleted
+        sparql_spec = get_test_sparql_spec("MOBRChain")
+        l = KBM.run_sparql(sparql_spec, "*")
+        assert len(l) == 0
+
+    def test_crud(self):
+        triples = """
+            ponto:MOBRChain a ponto:Parachain ;
+                rdfs:comment "Fictional parachain to test PAP." .
+
+            ponto:Polkadot ponto:hasParachain ponto:MOBRChain .
+        """
+
+        # (C) creating with triples injection
+        KBM.inject_triples(triples)
 
         # (R) reading to check if all the 3 triple were injected
         sparql_spec = get_test_sparql_spec("MOBRChain")
