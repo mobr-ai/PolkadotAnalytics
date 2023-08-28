@@ -4,7 +4,7 @@ from urllib.parse import quote
 from werkzeug.datastructures import FileStorage
 
 
-from pap.fuseki.dataset import create_ponto_dataset
+from pap.datalayer.dataset import create_ponto_dataset
 from pap.index import app, PONTO_URL
 
 class AppTestCase(unittest.TestCase):

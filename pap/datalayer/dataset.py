@@ -1,5 +1,5 @@
 from pap.util.Http import Http
-from pap.fuseki.kbm import KBM
+from pap.datalayer.kbm import KBM
 
 # mapping a few of the operations listed on fuseki documentation
 # see: https://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html#adding-a-dataset-and-its-services

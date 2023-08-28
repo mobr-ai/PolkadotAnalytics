@@ -26,12 +26,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import unittest
+<pre><code class="python">from pathlib import Path
+import unittest
 from urllib.parse import quote
 from werkzeug.datastructures import FileStorage
 
 
-from pap.fuseki.dataset import create_ponto_dataset
+from pap.datalayer.dataset import create_ponto_dataset
 from pap.index import app, PONTO_URL
 
 class AppTestCase(unittest.TestCase):
@@ -115,8 +116,9 @@ class AppTestCase(unittest.TestCase):
         assert &#34;blockchain&#34; in json
 
     def test_knowledge_injection(self):
+        turtle_file = Path(&#39;pap/tests/test.ttl&#39;).resolve()
         ttl_file = FileStorage(
-            stream=open(&#34;test.ttl&#34;, &#34;rb&#34;),
+            stream=open(turtle_file, &#34;rb&#34;),
             filename=&#34;test.ttl&#34;,
             content_type=&#34;text/turtle&#34;,
         )
@@ -240,8 +242,9 @@ not have a method with the specified name.</p></div>
         assert &#34;blockchain&#34; in json
 
     def test_knowledge_injection(self):
+        turtle_file = Path(&#39;pap/tests/test.ttl&#39;).resolve()
         ttl_file = FileStorage(
-            stream=open(&#34;test.ttl&#34;, &#34;rb&#34;),
+            stream=open(turtle_file, &#34;rb&#34;),
             filename=&#34;test.ttl&#34;,
             content_type=&#34;text/turtle&#34;,
         )
@@ -376,8 +379,9 @@ not have a method with the specified name.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_knowledge_injection(self):
+    turtle_file = Path(&#39;pap/tests/test.ttl&#39;).resolve()
     ttl_file = FileStorage(
-        stream=open(&#34;test.ttl&#34;, &#34;rb&#34;),
+        stream=open(turtle_file, &#34;rb&#34;),
         filename=&#34;test.ttl&#34;,
         content_type=&#34;text/turtle&#34;,
     )

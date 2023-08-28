@@ -1,6 +1,6 @@
 import unittest
 
-from pap.fuseki.dataset import DatasetManager
+from pap.datalayer.dataset import DatasetManager
 
 class DatasetTestCase(unittest.TestCase):
     """

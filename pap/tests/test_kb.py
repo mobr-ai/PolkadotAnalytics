@@ -1,9 +1,9 @@
 from pathlib import Path
 import unittest
 
-from pap.fuseki.dataset import create_ponto_dataset
+from pap.datalayer.dataset import create_ponto_dataset
 from pap.index import PONTO_URL
-from pap.fuseki.kbm import KBM
+from pap.datalayer.kbm import KBM
 
 def get_test_sparql_spec(entity_name:str) -> str:
     """

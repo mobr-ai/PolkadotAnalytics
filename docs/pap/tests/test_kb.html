@@ -26,11 +26,12 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import unittest
+<pre><code class="python">from pathlib import Path
+import unittest
 
-from pap.fuseki.dataset import create_ponto_dataset
+from pap.datalayer.dataset import create_ponto_dataset
 from pap.index import PONTO_URL
-from pap.fuseki.kbm import KBM
+from pap.datalayer.kbm import KBM
 
 def get_test_sparql_spec(entity_name:str) -&gt; str:
     &#34;&#34;&#34;
@@ -60,10 +61,36 @@ class KBTestCase(unittest.TestCase):
     def setUp(self):
         create_ponto_dataset(PONTO_URL)
 
-    def test_crud(self):
+    def test_turtle_injection(self):
+        turtle_file = Path(&#39;pap/tests/test.ttl&#39;).resolve()
 
         # (C) creating with knowledge inject
-        KBM.inject_turtle_file(&#34;test.ttl&#34;)
+        KBM.inject_turtle_file(turtle_file)
+
+        # (R) reading to check if all the 3 triple in the turtle file were injected
+        sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
+        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        assert len(l) == 3
+
+        # (D) deleting MOBRSysChain as subject and then as object
+        KBM.delete_entity(&#34;MOBRChain&#34;)
+        KBM.delete_entity(&#34;MOBRChain&#34;, &#34;o&#34;)
+
+        # asserting if it was deleted
+        sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
+        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        assert len(l) == 0
+
+    def test_crud(self):
+        triples = &#34;&#34;&#34;
+            ponto:MOBRChain a ponto:Parachain ;
+                rdfs:comment &#34;Fictional parachain to test PAP.&#34; .
+
+            ponto:Polkadot ponto:hasParachain ponto:MOBRChain .
+        &#34;&#34;&#34;
+
+        # (C) creating with triples injection
+        KBM.inject_triples(triples)
 
         # (R) reading to check if all the 3 triple were injected
         sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
@@ -165,10 +192,36 @@ not have a method with the specified name.</p></div>
     def setUp(self):
         create_ponto_dataset(PONTO_URL)
 
-    def test_crud(self):
+    def test_turtle_injection(self):
+        turtle_file = Path(&#39;pap/tests/test.ttl&#39;).resolve()
 
         # (C) creating with knowledge inject
-        KBM.inject_turtle_file(&#34;test.ttl&#34;)
+        KBM.inject_turtle_file(turtle_file)
+
+        # (R) reading to check if all the 3 triple in the turtle file were injected
+        sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
+        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        assert len(l) == 3
+
+        # (D) deleting MOBRSysChain as subject and then as object
+        KBM.delete_entity(&#34;MOBRChain&#34;)
+        KBM.delete_entity(&#34;MOBRChain&#34;, &#34;o&#34;)
+
+        # asserting if it was deleted
+        sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
+        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        assert len(l) == 0
+
+    def test_crud(self):
+        triples = &#34;&#34;&#34;
+            ponto:MOBRChain a ponto:Parachain ;
+                rdfs:comment &#34;Fictional parachain to test PAP.&#34; .
+
+            ponto:Polkadot ponto:hasParachain ponto:MOBRChain .
+        &#34;&#34;&#34;
+
+        # (C) creating with triples injection
+        KBM.inject_triples(triples)
 
         # (R) reading to check if all the 3 triple were injected
         sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
@@ -232,9 +285,15 @@ not have a method with the specified name.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_crud(self):
+    triples = &#34;&#34;&#34;
+        ponto:MOBRChain a ponto:Parachain ;
+            rdfs:comment &#34;Fictional parachain to test PAP.&#34; .
 
-    # (C) creating with knowledge inject
-    KBM.inject_turtle_file(&#34;test.ttl&#34;)
+        ponto:Polkadot ponto:hasParachain ponto:MOBRChain .
+    &#34;&#34;&#34;
+
+    # (C) creating with triples injection
+    KBM.inject_triples(triples)
 
     # (R) reading to check if all the 3 triple were injected
     sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
@@ -270,6 +329,36 @@ not have a method with the specified name.</p></div>
     assert len(l) == 0</code></pre>
 </details>
 </dd>
+<dt id="pap.tests.test_kb.KBTestCase.test_turtle_injection"><code class="name flex">
+<span>def <span class="ident">test_turtle_injection</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_turtle_injection(self):
+    turtle_file = Path(&#39;pap/tests/test.ttl&#39;).resolve()
+
+    # (C) creating with knowledge inject
+    KBM.inject_turtle_file(turtle_file)
+
+    # (R) reading to check if all the 3 triple in the turtle file were injected
+    sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
+    l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+    assert len(l) == 3
+
+    # (D) deleting MOBRSysChain as subject and then as object
+    KBM.delete_entity(&#34;MOBRChain&#34;)
+    KBM.delete_entity(&#34;MOBRChain&#34;, &#34;o&#34;)
+
+    # asserting if it was deleted
+    sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
+    l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+    assert len(l) == 0</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -298,6 +387,7 @@ not have a method with the specified name.</p></div>
 <ul class="">
 <li><code><a title="pap.tests.test_kb.KBTestCase.setUp" href="#pap.tests.test_kb.KBTestCase.setUp">setUp</a></code></li>
 <li><code><a title="pap.tests.test_kb.KBTestCase.test_crud" href="#pap.tests.test_kb.KBTestCase.test_crud">test_crud</a></code></li>
+<li><code><a title="pap.tests.test_kb.KBTestCase.test_turtle_injection" href="#pap.tests.test_kb.KBTestCase.test_turtle_injection">test_turtle_injection</a></code></li>
 </ul>
 </li>
 </ul>
