@@ -1,10 +1,9 @@
 from pap.util.Http import Http
 from pap.datalayer.kbm import KBM
 
-# mapping a few of the operations listed on fuseki documentation
-# see: https://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html#adding-a-dataset-and-its-services
+PONTO_URL = "https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl"
 
-def create_ponto_dataset(ponto_url:str, fuseki_base_url:str="http://127.0.0.1:3030"):
+def create_ponto_dataset(ponto_url:str=PONTO_URL, fuseki_base_url:str="http://127.0.0.1:3030"):
     """
     Function to create the POnto dataset in the fuseki server if it does not exist, and injects the POnto ontology in it.
     """
@@ -39,11 +38,12 @@ class DatasetManager:
         self.fuseki_base_url = fuseki_base_url
         self.http = Http(fuseki_base_url)
 
-    def create_ponto_dataset(self, path_ponto):
+    def create_ponto_dataset(self, path_ponto=PONTO_URL):
         """
         Creates the POnto dataset in the fuseki server if it does not exist, and injects the POnto ontology in it.
         """
         if self.has_dataset("POnto"):
+            print ("POnto dataset already exists")
             return
 
         r = self.create_dataset("POnto")
@@ -95,6 +95,8 @@ class DatasetManager:
         """
         Deletes the dataset named dataset_name
         """
-        endpoint = f'/$/datasets/{dataset_name}'
 
-        return self.http._delete(endpoint)
+        if self.has_dataset(dataset_name):
+            endpoint = f'/$/datasets/{dataset_name}'
+
+            return self.http._delete(endpoint)

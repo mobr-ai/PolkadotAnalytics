@@ -12,9 +12,6 @@ Detailed documentation on the flask routes are specified in the swagger UI docum
 Check http://127.0.0.1/swagger for details.
 """
 
-PONTO_URL = "https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl"
-
-
 ### FE entry point ###
 @app.route('/', methods=['POST', 'GET'])
 def index():

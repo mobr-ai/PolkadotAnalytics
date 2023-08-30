@@ -68,24 +68,17 @@ class Http:
         To send parameters and data you can use params and data. Headers specify the http headers for this message.
         """
         response = None
+        resp_json = dict()
         try:
             url = self.base_url + endpoint
             response:Response = self.session.request(method, url, params=params, data=data, timeout=30, headers=headers)
-            if response.status_code >= 300:
-                print (f"url: {url} returned status code {response.status_code} for the method: {method}")
-                print (f"    endpoint: {endpoint}. params: {params}. data: {data}. headers: {headers}.")
-                print (f"    response: {response.text}.")
-                resp_json = dict()
-
-            else:
+            if method != "DELETE":
                 resp_json = response.json()
 
-            response.close()
+            if method != "DELETE":
+                response.close()
 
-        except Exception as e:
-            print ("Http exception: ")
-            print (f"url: {url}. method: {method}. endpoint: {endpoint}. params: {params}. data: {data}. headers: {headers}. response: {response}.")
-            print (f"exception: {e}")
+        except requests.exceptions.RequestException as e:
             resp_json = dict()
 
         return resp_json

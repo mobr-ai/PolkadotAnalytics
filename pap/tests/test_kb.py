@@ -2,7 +2,6 @@ from pathlib import Path
 import unittest
 
 from pap.datalayer.dataset import create_ponto_dataset
-from pap.index import PONTO_URL
 from pap.datalayer.kbm import KBM
 
 def get_test_sparql_spec(entity_name:str) -> str:
@@ -31,7 +30,7 @@ class KBTestCase(unittest.TestCase):
     """
 
     def setUp(self):
-        create_ponto_dataset(PONTO_URL)
+        create_ponto_dataset()
 
     def test_turtle_injection(self):
         turtle_file = Path('pap/tests/test.ttl').resolve()

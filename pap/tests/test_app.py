@@ -5,7 +5,7 @@ from werkzeug.datastructures import FileStorage
 
 
 from pap.datalayer.dataset import create_ponto_dataset
-from pap.index import app, PONTO_URL
+from pap.index import app
 
 class AppTestCase(unittest.TestCase):
     """
@@ -18,7 +18,7 @@ class AppTestCase(unittest.TestCase):
         self.ctx = app.app_context()
         self.ctx.push()
         self.client = app.test_client()
-        create_ponto_dataset(PONTO_URL)
+        create_ponto_dataset()
 
     def tearDown(self):
         self.ctx.pop()

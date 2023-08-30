@@ -3,7 +3,7 @@ import sys
 from argparse import ArgumentParser
 from flask_compress import Compress
 
-from pap.index import app, PONTO_URL
+from pap.index import app
 from pap.datalayer.dataset import create_ponto_dataset
 
 if sys.version_info[0] < 3:
@@ -25,5 +25,5 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    create_ponto_dataset(PONTO_URL, args.fbu)
+    create_ponto_dataset(fuseki_base_url=args.fbu)
     app.run(host="0.0.0.0", port=5000, debug=False, threaded=False)
