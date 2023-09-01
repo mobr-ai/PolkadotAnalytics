@@ -24,6 +24,21 @@ class KBM:
 
     # utils
     ###
+    def extract_value(binding:dict):
+        """
+        Method to extract the value of a binding, according to its datatype
+        """
+        value = ""
+        if type(binding) is dict and "value" in binding:
+            value = binding["value"].replace(KBM.ponto_prefix, '')
+            if binding["type"] == "literal":
+                if "datatype" in binding:
+                    if binding["datatype"].find("integer") > 0:
+                        value = int(binding["value"])
+                    elif binding["datatype"].find("decimal") > 0:
+                        value = float(binding["value"])
+
+        return value
 
     def check_name(short_name:str) -> str:
         """
@@ -158,10 +173,10 @@ class KBM:
     # queries
     ###
 
-    def run_sparql(sparql_str, tripple_term="tt") -> list:
+    def run_sparql(sparql_str, filter:str="*") -> list:
         """
         Runs the sparql query specified in sparql_str, returning all the results where
-        the term tripple_term appears.
+        the filtered term specified in filter appears.
         """
         values = list()
         fuseki_query:FusekiQuery = FusekiQuery(KBM.fuseki_base_url, KBM.fuseki_endpoint)
@@ -170,11 +185,19 @@ class KBM:
         bindings = KBM.extract_bindings(fuseki_result)
         if bindings:
             for b in bindings:
-                if tripple_term == '*':
-                    values.append(b)
+                if filter == '*':
+                    current_value = dict()
+                    for k, v in b.items():
+                        if k in current_value:
+                            values.append(current_value)
+                            current_value = dict()
 
-                elif tripple_term in b:
-                    values.append(b[tripple_term]['value'].replace(KBM.ponto_prefix, ''))
+                        current_value[k] = KBM.extract_value(v)
+
+                    values.append(current_value)
+
+                elif filter in b:
+                    values.append(KBM.extract_value(b[filter]))
 
         return values
 
@@ -192,7 +215,7 @@ class KBM:
             }
         """
 
-        return KBM.run_sparql(sparql_str)
+        return KBM.run_sparql(sparql_str, filter='tt')
 
     def get_entity_class(entity_name:str) -> str:
         """
@@ -208,7 +231,7 @@ class KBM:
             }
         """
 
-        return KBM.run_sparql(sparql_str)
+        return KBM.run_sparql(sparql_str, filter='tt')
 
     def get_entity_subclasses(entity_name:str) -> list:
         """
@@ -224,7 +247,7 @@ class KBM:
             }
         """
 
-        return KBM.run_sparql(sparql_str)
+        return KBM.run_sparql(sparql_str, filter='tt')
 
     def get_all_classes() -> set:
         """
@@ -243,7 +266,7 @@ class KBM:
             }
         """
 
-        return KBM.run_sparql(sparql_str)
+        return KBM.run_sparql(sparql_str, filter='tt')
 
     def get_all_properties() -> set:
         """
@@ -257,7 +280,7 @@ class KBM:
             }
         """
 
-        return KBM.run_sparql(sparql_str)
+        return KBM.run_sparql(sparql_str, filter='tt')
 
     def define_entity(entity_name):
         """
@@ -276,4 +299,4 @@ class KBM:
             }
         """
 
-        return KBM.run_sparql(sparql_str)
+        return KBM.run_sparql(sparql_str, filter='tt')

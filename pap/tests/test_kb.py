@@ -40,7 +40,7 @@ class KBTestCase(unittest.TestCase):
 
         # (R) reading to check if all the 3 triple in the turtle file were injected
         sparql_spec = get_test_sparql_spec("MOBRChain")
-        l = KBM.run_sparql(sparql_spec, "*")
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 3
 
         # (D) deleting MOBRSysChain as subject and then as object
@@ -49,7 +49,7 @@ class KBTestCase(unittest.TestCase):
 
         # asserting if it was deleted
         sparql_spec = get_test_sparql_spec("MOBRChain")
-        l = KBM.run_sparql(sparql_spec, "*")
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 0
 
     def test_crud(self):
@@ -79,12 +79,12 @@ class KBTestCase(unittest.TestCase):
 
         # this is 1
         sparql_spec = get_test_sparql_spec("MOBRSysChain")
-        l = KBM.run_sparql(sparql_spec, "*")
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 3
 
         # this is 2
         sparql_spec = get_test_sparql_spec("MOBRChain")
-        l = KBM.run_sparql(sparql_spec, "*")
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 0
 
         # (D) deleting MOBRSysChain as subject and then as object
@@ -93,7 +93,7 @@ class KBTestCase(unittest.TestCase):
 
         # asserting if it was deleted indeed
         sparql_spec = get_test_sparql_spec("MOBRSysChain")
-        l = KBM.run_sparql(sparql_spec, "*")
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 0
 
 if __name__ == "__main__":

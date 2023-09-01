@@ -91,7 +91,7 @@ def kbm_sparql_query(select_term, sparql_spec):
     endpoint to run the sparql query specified in sparql_str, returning all the results where
     the term tripple_term appears.
     """
-    eclass = KBM.run_sparql(sparql_str=unquote(sparql_spec), tripple_term=select_term)
+    eclass = KBM.run_sparql(sparql_str=unquote(sparql_spec), filter=select_term)
     return jsonify(eclass)
 
 @app.route('/kbm/knowledge_injection', methods=['POST'])
