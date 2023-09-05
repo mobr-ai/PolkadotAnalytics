@@ -96,24 +96,17 @@ class Http:
         To send parameters and data you can use params and data. Headers specify the http headers for this message.
         &#34;&#34;&#34;
         response = None
+        resp_json = dict()
         try:
             url = self.base_url + endpoint
             response:Response = self.session.request(method, url, params=params, data=data, timeout=30, headers=headers)
-            if response.status_code &gt;= 300:
-                print (f&#34;url: {url} returned status code {response.status_code} for the method: {method}&#34;)
-                print (f&#34;    endpoint: {endpoint}. params: {params}. data: {data}. headers: {headers}.&#34;)
-                print (f&#34;    response: {response.text}.&#34;)
-                resp_json = dict()
-
-            else:
+            if method != &#34;DELETE&#34;:
                 resp_json = response.json()
 
-            response.close()
+            if method != &#34;DELETE&#34;:
+                response.close()
 
-        except Exception as e:
-            print (&#34;Http exception: &#34;)
-            print (f&#34;url: {url}. method: {method}. endpoint: {endpoint}. params: {params}. data: {data}. headers: {headers}. response: {response}.&#34;)
-            print (f&#34;exception: {e}&#34;)
+        except requests.exceptions.RequestException as e:
             resp_json = dict()
 
         return resp_json
@@ -274,24 +267,17 @@ you want to give to the connection pool)</p></div>
         To send parameters and data you can use params and data. Headers specify the http headers for this message.
         &#34;&#34;&#34;
         response = None
+        resp_json = dict()
         try:
             url = self.base_url + endpoint
             response:Response = self.session.request(method, url, params=params, data=data, timeout=30, headers=headers)
-            if response.status_code &gt;= 300:
-                print (f&#34;url: {url} returned status code {response.status_code} for the method: {method}&#34;)
-                print (f&#34;    endpoint: {endpoint}. params: {params}. data: {data}. headers: {headers}.&#34;)
-                print (f&#34;    response: {response.text}.&#34;)
-                resp_json = dict()
-
-            else:
+            if method != &#34;DELETE&#34;:
                 resp_json = response.json()
 
-            response.close()
+            if method != &#34;DELETE&#34;:
+                response.close()
 
-        except Exception as e:
-            print (&#34;Http exception: &#34;)
-            print (f&#34;url: {url}. method: {method}. endpoint: {endpoint}. params: {params}. data: {data}. headers: {headers}. response: {response}.&#34;)
-            print (f&#34;exception: {e}&#34;)
+        except requests.exceptions.RequestException as e:
             resp_json = dict()
 
         return resp_json

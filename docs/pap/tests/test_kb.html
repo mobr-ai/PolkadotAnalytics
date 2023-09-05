@@ -30,7 +30,6 @@
 import unittest
 
 from pap.datalayer.dataset import create_ponto_dataset
-from pap.index import PONTO_URL
 from pap.datalayer.kbm import KBM
 
 def get_test_sparql_spec(entity_name:str) -&gt; str:
@@ -59,7 +58,7 @@ class KBTestCase(unittest.TestCase):
     &#34;&#34;&#34;
 
     def setUp(self):
-        create_ponto_dataset(PONTO_URL)
+        create_ponto_dataset()
 
     def test_turtle_injection(self):
         turtle_file = Path(&#39;pap/tests/test.ttl&#39;).resolve()
@@ -69,7 +68,7 @@ class KBTestCase(unittest.TestCase):
 
         # (R) reading to check if all the 3 triple in the turtle file were injected
         sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 3
 
         # (D) deleting MOBRSysChain as subject and then as object
@@ -78,7 +77,7 @@ class KBTestCase(unittest.TestCase):
 
         # asserting if it was deleted
         sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 0
 
     def test_crud(self):
@@ -108,12 +107,12 @@ class KBTestCase(unittest.TestCase):
 
         # this is 1
         sparql_spec = get_test_sparql_spec(&#34;MOBRSysChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 3
 
         # this is 2
         sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 0
 
         # (D) deleting MOBRSysChain as subject and then as object
@@ -122,7 +121,7 @@ class KBTestCase(unittest.TestCase):
 
         # asserting if it was deleted indeed
         sparql_spec = get_test_sparql_spec(&#34;MOBRSysChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 0
 
 if __name__ == &#34;__main__&#34;:
@@ -190,7 +189,7 @@ not have a method with the specified name.</p></div>
     &#34;&#34;&#34;
 
     def setUp(self):
-        create_ponto_dataset(PONTO_URL)
+        create_ponto_dataset()
 
     def test_turtle_injection(self):
         turtle_file = Path(&#39;pap/tests/test.ttl&#39;).resolve()
@@ -200,7 +199,7 @@ not have a method with the specified name.</p></div>
 
         # (R) reading to check if all the 3 triple in the turtle file were injected
         sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 3
 
         # (D) deleting MOBRSysChain as subject and then as object
@@ -209,7 +208,7 @@ not have a method with the specified name.</p></div>
 
         # asserting if it was deleted
         sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 0
 
     def test_crud(self):
@@ -239,12 +238,12 @@ not have a method with the specified name.</p></div>
 
         # this is 1
         sparql_spec = get_test_sparql_spec(&#34;MOBRSysChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 3
 
         # this is 2
         sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 0
 
         # (D) deleting MOBRSysChain as subject and then as object
@@ -253,7 +252,7 @@ not have a method with the specified name.</p></div>
 
         # asserting if it was deleted indeed
         sparql_spec = get_test_sparql_spec(&#34;MOBRSysChain&#34;)
-        l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+        l = KBM.run_sparql(sparql_spec)
         assert len(l) == 0</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -272,7 +271,7 @@ not have a method with the specified name.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setUp(self):
-    create_ponto_dataset(PONTO_URL)</code></pre>
+    create_ponto_dataset()</code></pre>
 </details>
 </dd>
 <dt id="pap.tests.test_kb.KBTestCase.test_crud"><code class="name flex">
@@ -311,12 +310,12 @@ not have a method with the specified name.</p></div>
 
     # this is 1
     sparql_spec = get_test_sparql_spec(&#34;MOBRSysChain&#34;)
-    l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+    l = KBM.run_sparql(sparql_spec)
     assert len(l) == 3
 
     # this is 2
     sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
-    l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+    l = KBM.run_sparql(sparql_spec)
     assert len(l) == 0
 
     # (D) deleting MOBRSysChain as subject and then as object
@@ -325,7 +324,7 @@ not have a method with the specified name.</p></div>
 
     # asserting if it was deleted indeed
     sparql_spec = get_test_sparql_spec(&#34;MOBRSysChain&#34;)
-    l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+    l = KBM.run_sparql(sparql_spec)
     assert len(l) == 0</code></pre>
 </details>
 </dd>
@@ -346,7 +345,7 @@ not have a method with the specified name.</p></div>
 
     # (R) reading to check if all the 3 triple in the turtle file were injected
     sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
-    l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+    l = KBM.run_sparql(sparql_spec)
     assert len(l) == 3
 
     # (D) deleting MOBRSysChain as subject and then as object
@@ -355,7 +354,7 @@ not have a method with the specified name.</p></div>
 
     # asserting if it was deleted
     sparql_spec = get_test_sparql_spec(&#34;MOBRChain&#34;)
-    l = KBM.run_sparql(sparql_spec, &#34;*&#34;)
+    l = KBM.run_sparql(sparql_spec)
     assert len(l) == 0</code></pre>
 </details>
 </dd>

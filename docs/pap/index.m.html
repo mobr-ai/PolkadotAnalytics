@@ -40,9 +40,6 @@ Detailed documentation on the flask routes are specified in the swagger UI docum
 Check http://127.0.0.1/swagger for details.
 &#34;&#34;&#34;
 
-PONTO_URL = &#34;https://raw.githubusercontent.com/mobr-ai/ponto/main/src/flat/POnto.ttl&#34;
-
-
 ### FE entry point ###
 @app.route(&#39;/&#39;, methods=[&#39;POST&#39;, &#39;GET&#39;])
 def index():
@@ -122,7 +119,7 @@ def kbm_sparql_query(select_term, sparql_spec):
     endpoint to run the sparql query specified in sparql_str, returning all the results where
     the term tripple_term appears.
     &#34;&#34;&#34;
-    eclass = KBM.run_sparql(sparql_str=unquote(sparql_spec), tripple_term=select_term)
+    eclass = KBM.run_sparql(sparql_str=unquote(sparql_spec), filter=select_term)
     return jsonify(eclass)
 
 @app.route(&#39;/kbm/knowledge_injection&#39;, methods=[&#39;POST&#39;])
@@ -332,7 +329,7 @@ def kbm_sparql_query(select_term, sparql_spec):
     endpoint to run the sparql query specified in sparql_str, returning all the results where
     the term tripple_term appears.
     &#34;&#34;&#34;
-    eclass = KBM.run_sparql(sparql_str=unquote(sparql_spec), tripple_term=select_term)
+    eclass = KBM.run_sparql(sparql_str=unquote(sparql_spec), filter=select_term)
     return jsonify(eclass)</code></pre>
 </details>
 </dd>
