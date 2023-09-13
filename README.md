@@ -18,14 +18,24 @@ The Polkadot Analytics Platform aims at building a comprehensive data analysis a
 
 # How to run locally (see section a) or on docker (see section b)
 
-## First of all, clone this repository: 
-```
+## First of all, clone PAP (Polkadot Analytics Platform) repository: 
+```bash
 git clone https://github.com/mobr-ai/PolkadotAnalytics.git
 ```
 
 <br>
 
 ## a. Run locally on your computer
+
+We recommend using a [virtual environment](https://docs.python.org/3/library/venv.html) since we are installing custom requirements.
+
+```bash
+# setting the virtual environment on PAP
+virtualenv venv
+
+# now to use the virtual environment you just set
+source venv/bin/activate
+```
 
 <br>
 
